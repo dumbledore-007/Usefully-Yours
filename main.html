@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Uselessly Yours — Funny Blog Generator (fixed analyzer)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .score-bar-outer { background: rgba(0,0,0,0.06); border-radius: 999px; height: 10px; overflow: hidden; }
+    .score-bar-inner { height: 100%; transition: width 600ms ease, background 400ms ease; border-radius: 999px; width:0%; }
+    /* small modal tweak */
+    .modal-bg { background: rgba(0,0,0,0.6); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
+
+  <!-- HEADER -->
+  <header class="bg-white shadow sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-br from-pink-300 to-indigo-300 font-extrabold">UY</div>
+        <div>
+          <h1 class="text-lg font-extrabold">Uselessly Yours <span class="text-sm text-slate-500 font-normal">— Funny blog generator</span></h1>
+          <p class="text-xs text-slate-400">Generate, add, upload, and analyze how funny your nonsense is.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div id="current-user" class="text-sm text-slate-600">Not logged in</div>
+        <button id="open-login" class="px-3 py-1 rounded bg-pink-500 text-white hover:bg-pink-400">Login</button>
+        <button id="open-register" class="px-3 py-1 rounded bg-purple-600 text-white hover:bg-purple-500">Register</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Left: generator & authoring -->
+    <section class="col-span-2 space-y-6">
+
+      <!-- Generator card -->
+      <div class="bg-white p-5 rounded-2xl shadow">
+        <h2 class="text-2xl font-bold mb-2">Blog Generator</h2>
+        <p class="text-sm text-slate-500 mb-4">Enter a seed and pick a category & tone, or add your own blog below.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+          <input id="seed-input" type="text" placeholder="Topic / seed (e.g. My pizza escaped)" class="p-3 rounded border" />
+          <select id="category-select" class="p-3 rounded border">
+            <option>Random Sarcasm</option>
+            <option>Dad Jokes</option>
+            <option>Office Humor</option>
+            <option>Pun Battles</option>
+            <option>Meme Worthy</option>
+            <option>Awkward Moments</option>
+            <option>Shower Thoughts</option>
+            <option>Food Fails</option>
+            <option>Pet Antics</option>
+            <option>Tech Goofs</option>
+            <option>Relationship Roasts</option>
+            <option>Epic Fails</option>
+            <option>Weird Facts</option>
+            <option>Surreal Nonsense</option>
+          </select>
+          <select id="tone-select" class="p-3 rounded border">
+            <option value="silly">Light & Silly</option>
+            <option value="dramatic">Over-the-Top</option>
+            <option value="dry">Deadpan</option>
+            <option value="satire">Satirical</option>
+          </select>
+        </div>
+
+        <div class="flex gap-2 mb-3">
+          <button id="generate-btn" class="px-3 py-2 rounded bg-emerald-500 text-white hover:bg-emerald-400">Generate Post</button>
+          <button id="regenerate-btn" class="px-3 py-2 rounded border">Regenerate</button>
+          <button id="save-btn" class="px-3 py-2 rounded border">Save to Feed</button>
+          <button id="clear-btn" class="px-3 py-2 rounded border">Clear</button>
+          <div class="ml-auto flex items-center gap-2">
+            <input id="upload-txt" type="file" accept=".txt" class="text-sm" />
+          </div>
+        </div>
+
+        <!-- Generated output -->
+        <div id="post-output" class="hidden bg-slate-50 p-4 rounded">
+          <h3 id="out-title" class="font-bold text-lg mb-2"></h3>
+          <div id="out-image" class="mb-3"></div>
+          <p id="out-text" class="whitespace-pre-line"></p>
+
+          <div class="mt-4">
+            <div class="flex items-center justify-between">
+              <div class="text-sm text-slate-600">Funny Score</div>
+              <div id="score-text" class="text-sm font-semibold text-pink-500">0%</div>
+            </div>
+            <div class="score-bar-outer mt-2">
+              <div id="score-bar" class="score-bar-inner" style="background:#ef4444"></div>
+            </div>
+            <div id="score-label" class="mt-2 text-sm text-slate-500 italic"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add your own blog -->
+      <div class="bg-white p-5 rounded-2xl shadow">
+        <h3 class="text-xl font-bold mb-3">Add / Upload Your Blog</h3>
+        <input id="post-title" placeholder="Title (optional)" class="w-full p-3 rounded border mb-3" />
+        <textarea id="post-content" rows="5" placeholder="Write your blog here..." class="w-full p-3 rounded border mb-3"></textarea>
+        <input id="post-tags" placeholder="Tags (comma separated)" class="w-full p-3 rounded border mb-3" />
+        <div class="flex gap-2">
+          <button id="submit-post" class="px-3 py-2 rounded bg-indigo-600 text-white">Submit Post</button>
+          <button id="clear-post-form" class="px-3 py-2 rounded border">Clear</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Right: feed -->
+    <aside class="space-y-6">
+      <div class="bg-white p-4 rounded-2xl shadow sticky top-20">
+        <h4 class="font-bold">Main Feed</h4>
+        <p class="text-sm text-slate-500">Generated posts and user submissions appear below.</p>
+      </div>
+
+      <div id="feed" class="space-y-4"></div>
+    </aside>
+  </main>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="hidden fixed inset-0 modal-bg flex items-center justify-center opacity-0 transition-opacity duration-300 z-40">
+    <div class="modal-panel bg-white p-6 rounded-lg transform scale-95 transition-transform duration-300 w-96">
+      <h3 class="text-xl font-bold mb-3">Login</h3>
+      <input id="loginUser" type="text" placeholder="Username" class="w-full mb-2 p-2 rounded border" />
+      <input id="loginPass" type="password" placeholder="Password" class="w-full mb-4 p-2 rounded border" />
+      <div class="flex gap-2 justify-end">
+        <button id="closeLogin" class="px-3 py-1 rounded bg-slate-200">Close</button>
+        <button id="loginSubmit" class="px-3 py-1 rounded bg-pink-500 text-white">Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div id="registerModal" class="hidden fixed inset-0 modal-bg flex items-center justify-center opacity-0 transition-opacity duration-300 z-40">
+    <div class="modal-panel bg-white p-6 rounded-lg transform scale-95 transition-transform duration-300 w-96">
+      <h3 class="text-xl font-bold mb-3">Register</h3>
+      <input id="regUser" type="text" placeholder="Username" class="w-full mb-2 p-2 rounded border" />
+      <input id="regPass" type="password" placeholder="Password" class="w-full mb-4 p-2 rounded border" />
+      <div class="flex gap-2 justify-end">
+        <button id="closeRegister" class="px-3 py-1 rounded bg-slate-200">Close</button>
+        <button id="registerSubmitBtn" class="px-3 py-1 rounded bg-purple-500 text-white">Register</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // ---------- Bad words (simple list) ----------
+  const badWords = ['fuck','shit','bitch','asshole','cunt']; // expand/change as required
+  function containsBadWord(text) {
+    if (!text) return false;
+    const lower = text.toLowerCase();
+    return badWords.some(bw => lower.includes(bw));
+  }
+
+  // ---------- Funny analyzer (improved) ----------
+  const lexicon = {
+    banana:2, chicken:2, pizza:2, penguin:2, fart:3, lol:3, haha:3, meme:2,
+    goat:1, llama:1, socks:1, quantum:2, donut:1, unicorn:2, goofy:1, awkward:2,
+    prank:2, absurd:2, epic:1, fail:1, silly:1, ridiculous:1, spinach:1
+  };
+  const lexKeys = Object.keys(lexicon);
+
+  function analyzeFunnyPercentage(text) {
+    if (!text || !text.trim()) return 0;
+    const clean = String(text).toLowerCase();
+    const words = clean.split(/\W+/).filter(Boolean);
+    const totalWords = words.length;
+
+    // Very short: tiny score
+    if (totalWords <= 1) return 1;
+    if (totalWords <= 3) return Math.max(2, Math.round(totalWords * 2)); // 2..6
+
+    // Weighted matches
+    let weightedMatches = 0;
+    const found = new Set();
+    for (const w of words) {
+      if (lexicon[w]) {
+        weightedMatches += lexicon[w];
+        found.add(w);
+      }
+    }
+
+    const uniqueMatches = found.size;
+
+    // basePercent (variety)
+    const basePercent = (uniqueMatches / lexKeys.length) * 55; // up to ~55
+
+    // density: weightedMatches per word -> boost up to 30
+    const density = weightedMatches / Math.max(1, totalWords);
+    const densityBoost = Math.min(30, Math.round(density * 250)); // scaled
+
+    // punctuation/exaggeration boosts
+    let punctBoost = 0;
+    if (/[!]{2,}/.test(text)) punctBoost += 6;
+    if (/[?]{2,}/.test(text)) punctBoost += 4;
+    if (/[!?.]{3,}/.test(text)) punctBoost += 4;
+    if (/(so+|very+|super+)/i.test(text)) punctBoost += 3;
+    if (/[😂🤣🤪😹]/.test(text)) punctBoost += 8; // emoji laughs
+
+    // length boost (moderate)
+    const lengthBoost = Math.min(10, Math.round(Math.log(Math.max(1, totalWords)) * 3));
+
+    // creativity randomness (small)
+    const chaos = Math.round((Math.random() - 0.25) * 8); // -2..+6 roughly
+
+    let percent = Math.round(basePercent + densityBoost + punctBoost + lengthBoost + chaos);
+
+    // if nothing matched but text is long, give small baseline
+    if (weightedMatches === 0 && totalWords > 40) percent = Math.max(percent, 8);
+
+    percent = Math.max(0, Math.min(100, percent));
+    return percent;
+  }
+
+  function scoreLabel(p) {
+    if (p >= 85) return '💯 HILARIOUS — Share immediately';
+    if (p >= 65) return '🤣 Very Funny';
+    if (p >= 40) return '😆 Kinda Funny';
+    if (p >= 15) return '😐 Mildly Amusing';
+    return '😬 Not Funny (yet)';
+  }
+  function scoreColor(p) {
+    if (p >= 70) return '#10b981';
+    if (p >= 40) return '#f59e0b';
+    return '#ef4444';
+  }
+
+  // ---------- Modal setup ----------
+  function setupModal(openId, modalId, closeId, submitId) {
+    const openBtn = document.getElementById(openId);
+    const modal = document.getElementById(modalId);
+    const panel = modal.querySelector('.modal-panel');
+    const closeBtn = document.getElementById(closeId);
+
+    openBtn && openBtn.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+      // ensure hidden classes exist initially
+      modal.classList.add('opacity-0'); panel.classList.add('scale-95');
+      setTimeout(() => { modal.classList.remove('opacity-0'); panel.classList.remove('scale-95'); }, 10);
+    });
+
+    closeBtn && closeBtn.addEventListener('click', () => {
+      modal.classList.add('opacity-0'); panel.classList.add('scale-95');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) { modal.classList.add('opacity-0'); panel.classList.add('scale-95'); setTimeout(() => modal.classList.add('hidden'),300); }
+    });
+
+    if (submitId) {
+      const submit = document.getElementById(submitId);
+      submit && submit.addEventListener('click', () => {
+        // simple demo: set current user and close
+        const inputVal = modal.querySelector('input') && modal.querySelector('input').value;
+        if (inputVal) document.getElementById('current-user').textContent = `Hello, ${inputVal}`;
+        modal.classList.add('opacity-0'); panel.classList.add('scale-95'); setTimeout(() => modal.classList.add('hidden'),300);
+      });
+    }
+  }
+  setupModal('open-login','loginModal','closeLogin','loginSubmit');
+  setupModal('open-register','registerModal','closeRegister','registerSubmitBtn');
+
+  // ---------- Feed rendering ----------
+  const feed = document.getElementById('feed');
+  function renderPostCard({title, content, tags, score}) {
+    const card = document.createElement('div');
+    card.className = 'bg-white p-4 rounded shadow';
+    const tagsHtml = tags ? `<div class="text-xs text-slate-500 mb-2">${tags.split(',').map(t=>`#${t.trim()}`).join(' ')}</div>` : '';
+    card.innerHTML = `
+      <div class="flex justify-between items-start gap-4">
+        <div class="flex-1">
+          <h4 class="font-bold text-lg">${title || 'Untitled'}</h4>
+          ${tagsHtml}
+          <p class="text-sm text-slate-700 whitespace-pre-line">${content}</p>
+        </div>
+        <div class="text-right ml-4">
+          <div class="text-sm font-semibold text-slate-600">Funny</div>
+          <div class="text-2xl font-bold text-pink-500">${score}%</div>
+        </div>
+      </div>
+    `;
+    feed.prepend(card);
+  }
+
+  // ---------- Generator & UI ----------
+  const generateBtn = document.getElementById('generate-btn');
+  const regenerateBtn = document.getElementById('regenerate-btn');
+  const saveBtn = document.getElementById('save-btn');
+  const clearBtn = document.getElementById('clear-btn');
+
+  const seedInput = document.getElementById('seed-input');
+  const categorySelect = document.getElementById('category-select');
+  const toneSelect = document.getElementById('tone-select');
+
+  const postOutput = document.getElementById('post-output');
+  const outTitle = document.getElementById('out-title');
+  const outText = document.getElementById('out-text');
+  const outImage = document.getElementById('out-image');
+  const scoreText = document.getElementById('score-text');
+  const scoreBar = document.getElementById('score-bar');
+  const scoreLabelElem = document.getElementById('score-label');
+
+  const imagePools = {
+    meme: ['https://i.imgflip.com/30b1gx.jpg','https://i.imgflip.com/1bij.jpg'],
+    cat: ['https://cataas.com/cat/says/what%20even','https://cataas.com/cat/funny/says/seriously'],
+    reaction: ['https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif']
+  };
+  function pickImage(style) { const pool = imagePools[style] || imagePools.meme; return pool[Math.floor(Math.random()*pool.length)]; }
+
+  const funnyPhrases = ['a penguin wearing sunglasses','a runaway pizza slice','a banana conspiracy','a goat eating socks','a quantum donut debate','a fart that saved the day','an angry chicken at a meme convention'];
+
+  let lastGenerated = null;
+
+  generateBtn.addEventListener('click', () => {
+    const seed = (seedInput.value || '').trim();
+    if (!seed) { alert('Please enter a topic/seed.'); seedInput.focus(); return; }
+
+    // Build post text (includes a random funny phrase sometimes)
+    const phrase1 = funnyPhrases[Math.floor(Math.random()*funnyPhrases.length)];
+    const phrase2 = Math.random()<0.5 ? '' : ' Also, ' + funnyPhrases[Math.floor(Math.random()*funnyPhrases.length)];
+    const content = `Topic: ${seed}\n\nIn a ${toneSelect.value.toLowerCase()} ${categorySelect.value.toLowerCase()} style: ${seed} reminded me of ${phrase1}.${phrase2}\n\nIt was ridiculous, poetic, and probably memeable.`;
+    const title = `${seed} — a useless story`;
+    const tags = categorySelect.value.toLowerCase().split(' ').slice(0,3).join(',');
+    const image = pickImage('meme');
+
+    // Bad words check
+    if (containsBadWord(title + ' ' + content)) { alert('Post contains inappropriate language. Remove it before posting.'); return; }
+
+    const score = analyzeFunnyPercentage(title + ' ' + content);
+
+    // Render in generator output
+    outTitle.textContent = title;
+    outText.textContent = content;
+    outImage.innerHTML = `<img src="${image}" alt="funny" class="rounded mb-3 w-full" />`;
+    scoreText.textContent = `${score}%`;
+    scoreBar.style.width = score + '%';
+    scoreBar.style.background = scoreColor(score);
+    scoreLabelElem.textContent = scoreLabel(score);
+    postOutput.classList.remove('hidden');
+
+    lastGenerated = {title, content, tags, score, image};
+  });
+
+  regenerateBtn.addEventListener('click', () => {
+    if (!lastGenerated) { alert('Generate a post first.'); return; }
+    lastGenerated.content += '\n\n(More chaos happened.)';
+    lastGenerated.score = analyzeFunnyPercentage(lastGenerated.title + ' ' + lastGenerated.content);
+    outText.textContent = lastGenerated.content;
+    scoreText.textContent = `${lastGenerated.score}%`;
+    scoreBar.style.width = lastGenerated.score + '%';
+    scoreBar.style.background = scoreColor(lastGenerated.score);
+    scoreLabelElem.textContent = scoreLabel(lastGenerated.score);
+  });
+
+  saveBtn.addEventListener('click', () => {
+    if (!lastGenerated) { alert('No generated post to save.'); return; }
+    renderPostCard(lastGenerated);
+    // persist
+    const saved = JSON.parse(localStorage.getItem('uus_saved')||'[]');
+    saved.unshift(lastGenerated);
+    localStorage.setItem('uus_saved', JSON.stringify(saved));
+    alert('Saved to feed & localStorage.');
+  });
+
+  clearBtn.addEventListener('click', () => {
+    seedInput.value = '';
+    postOutput.classList.add('hidden');
+    lastGenerated = null;
+  });
+
+  // ---------- Submit user post (type/upload) ----------
+  const submitPostBtn = document.getElementById('submit-post');
+  const titleInput = document.getElementById('post-title');
+  const contentInput = document.getElementById('post-content');
+  const tagsInput = document.getElementById('post-tags');
+  const uploadTxt = document.getElementById('upload-txt');
+
+  submitPostBtn.addEventListener('click', () => {
+    const t = (titleInput.value || '').trim();
+    const c = (contentInput.value || '').trim();
+    const tags = (tagsInput.value || '').trim();
+    if (!c) { alert('Write some content before submitting.'); return; }
+    if (containsBadWord(t + ' ' + c)) { alert('Your post contains prohibited language. Please remove it.'); return; }
+    const score = analyzeFunnyPercentage((t + ' ' + c).trim());
+    renderPostCard({title: t || 'User Post', content: c, tags, score});
+    titleInput.value = ''; contentInput.value = ''; tagsInput.value = '';
+  });
+
+  uploadTxt.addEventListener('change', (e) => {
+    const f = e.target.files[0];
+    if (!f) return;
+    if (f.type !== 'text/plain' && !f.name.endsWith('.txt')) { alert('Please upload a .txt file'); return; }
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const text = evt.target.result;
+      if (containsBadWord(text)) { alert('Uploaded file contains prohibited language.'); return; }
+      const title = f.name.replace(/\.[^/.]+$/, '') || 'Uploaded Post';
+      const score = analyzeFunnyPercentage(title + ' ' + text);
+      renderPostCard({title, content: text, tags: 'uploaded', score});
+    };
+    reader.readAsText(f);
+    e.target.value = '';
+  });
+
+  // load saved
+  JSON.parse(localStorage.getItem('uus_saved')||'[]').forEach(p => renderPostCard(p));
+});
+</script>
+</body>
+</html>

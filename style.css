@@ -1,0 +1,99 @@
+
+/* ====== Blue Sage Theme ====== */
+body {
+  background-color: #f0f4f5;
+  color: #1e2d2f;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  user-select: none; /* Prevent text selection */
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar */
+nav {
+  background-color: #e0f1f2;
+  border-bottom: 2px solid #bcd4d5;
+}
+
+/* Buttons */
+button {
+  background-color: #3a7d89;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background-color: #316b74;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Textarea */
+textarea {
+  background-color: #ffffff;
+  border: 1px solid #c5d8d9;
+  border-radius: 6px;
+  resize: none;
+  transition: border 0.2s ease;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #3a7d89;
+  box-shadow: 0 0 4px rgba(58, 125, 137, 0.4);
+}
+
+/* Blog Output Card */
+#blog-output {
+  background-color: #ffffff;
+  border-left: 4px solid #3a7d89;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+/* Modal Overlay */
+#loginModal {
+  user-select: none;
+}
+
+/* Modal Panel */
+.modal-panel {
+  background-color: #fefefe;
+  border: 2px solid #c5d8d9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Inputs in Modal */
+.modal-panel input {
+  background-color: #f9fafa;
+  border: 1px solid #c5d8d9;
+}
+
+.modal-panel input:focus {
+  outline: none;
+  border-color: #3a7d89;
+  box-shadow: 0 0 4px rgba(58, 125, 137, 0.3);
+}
+
+/* Scrollbar Styling (optional aesthetic touch) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a8c2c4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8cb0b3;
+}
