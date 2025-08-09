@@ -62,7 +62,11 @@ Screenshots
 Project Demo
 Video
 https://drive.google.com/file/d/1-YlNXJBiytuBjefdrwGvph8Zi0hpmcAc/view?usp=sharing
- Explain what the video demonstrates
+Welcome to You, Fully Yours  our intelligent blog prediction and humor analysis website.
+First, we start by entering a topic into the input box. This could be anything you want a creative or humorous take on. Once we enter the topic, our system instantly generates a unique blog post based on it.
+Next, we can refine the tone of the blog using our style options  for example, ‘Witty & Silly’ or 'meme worthy'. These allow users to control the humor level and style of their generated content.
+Within seconds, the website displays a fully written blog along with a humor percentage score, showing just how funny the generated post is.
+It’s quick, simple, and fun  turning any idea into an engaging and shareable piece of writing.
 
 
 Team Contributions
