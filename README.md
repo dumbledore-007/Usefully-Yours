@@ -1,3 +1,4 @@
+<img width="3188" height="1202" alt="frame (3)" src="https://github.com/user-attachments/assets/517ad8e9-ad22-457d-9538-a9e62d137cd7" />
 Usefully Yours 🎯
 Basic Details
 Team Name: Enigma
@@ -58,12 +59,11 @@ Screenshots
 
 ![Screenshot3](https://github.com/dumbledore-007/Usefully-Yours/blob/main/part%203.png) Demonstration of our website’s functionality where a user-uploaded blog titled The Epic Tale of My Socks Disappeared is generated and humor analysis is performed, resulting in a 36% funny score.
 
-website link : file:///C:/Users/Nithya/OneDrive/Desktop/new%20p/main.html
-
 Project Demo
 Video
-[Add your demo video link here] Explain what the video demonstrates
+https://drive.google.com/file/d/1-YlNXJBiytuBjefdrwGvph8Zi0hpmcAc/view?usp=sharing
+ Explain what the video demonstrates
 
 
 Team Contributions
-[Name 1]: Ananya Issac
+ Ananya Issac
