@@ -56,11 +56,9 @@ Screenshots
 ![Screenshot1](https://github.com/dumbledore-007/Usefully-Yours/blob/main/part%201.png) 
 ![Screenshot2](https://github.com/dumbledore-007/Usefully-Yours/blob/main/Part%202.png) Example output from our developed website that generates humorous blog content and provides percentage-based analysis, showcasing the title The Great Invisible Sock Migration: Where Do All the Missing Socks Really Go?
 
-![Screenshot3](https://github.com/dumbledore-007/Usefully-Yours/blob/main/part%203.png) Add caption explaining what this shows
+![Screenshot3](https://github.com/dumbledore-007/Usefully-Yours/blob/main/part%203.png) Demonstration of our website’s functionality where a user-uploaded blog titled The Epic Tale of My Socks Disappeared is generated and humor analysis is performed, resulting in a 36% funny score.
 
-Diagrams
-![Workflow](Add your workflow/architecture diagram here) Add caption explaining your workflow
-
+website link : file:///C:/Users/Nithya/OneDrive/Desktop/new%20p/main.html
 
 Project Demo
 Video
