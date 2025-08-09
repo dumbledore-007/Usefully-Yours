@@ -57,7 +57,7 @@ Screenshots
 
 ![Screenshot2](https://github.com/dumbledore-007/Usefully-Yours/blob/main/Part%202.png) Add caption explaining what this shows
 
-![Screenshot3](Add screenshot 3 here with proper name) Add caption explaining what this shows
+![Screenshot3](https://github.com/dumbledore-007/Usefully-Yours/blob/main/part%203.png) Add caption explaining what this shows
 
 Diagrams
 ![Workflow](Add your workflow/architecture diagram here) Add caption explaining your workflow
