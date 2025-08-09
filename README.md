@@ -32,9 +32,6 @@ VS Code (or any text editor)
 Browser developer tools (Chrome/Firefox)
 Git (for version control)
 
-For Hardware:
-Since it’s a web-based project, hardware requirements are minimal.
-
 Main components:
 Laptop/PC with internet access
 
@@ -45,12 +42,6 @@ Modern web browser (Chrome, Edge, Firefox)
 Tools required:
 None beyond the development software above
 
-Installation
-[commands]
-
-Run
-[commands]
- 
 Project Documentation
 
 For Software:
