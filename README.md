@@ -55,7 +55,7 @@ Browse multiple humor categories (puns, sarcasm, memes, absurd stories, etc.).
 Screenshots 
 ![Screenshot1](https://github.com/dumbledore-007/Usefully-Yours/blob/main/part%201.png) Add caption explaining what this shows
 
-![Screenshot2](Add screenshot 2 here with proper name) Add caption explaining what this shows
+![Screenshot2](https://github.com/dumbledore-007/Usefully-Yours/blob/main/Part%202.png) Add caption explaining what this shows
 
 ![Screenshot3](Add screenshot 3 here with proper name) Add caption explaining what this shows
 
