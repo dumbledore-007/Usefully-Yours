@@ -53,37 +53,19 @@ Add blogs to a public feed where others can view them.
 Browse multiple humor categories (puns, sarcasm, memes, absurd stories, etc.).
 
 Screenshots 
-![Screenshot1](https://github.com/dumbledore-007/Usefully-Yours/blob/main/part%201.png) Add caption explaining what this shows
-
-![Screenshot2](https://github.com/dumbledore-007/Usefully-Yours/blob/main/Part%202.png) Add caption explaining what this shows
+![Screenshot1](https://github.com/dumbledore-007/Usefully-Yours/blob/main/part%201.png) 
+![Screenshot2](https://github.com/dumbledore-007/Usefully-Yours/blob/main/Part%202.png) Example output from our developed website that generates humorous blog content and provides percentage-based analysis, showcasing the title The Great Invisible Sock Migration: Where Do All the Missing Socks Really Go?
 
 ![Screenshot3](https://github.com/dumbledore-007/Usefully-Yours/blob/main/part%203.png) Add caption explaining what this shows
 
 Diagrams
 ![Workflow](Add your workflow/architecture diagram here) Add caption explaining your workflow
 
-For Hardware:
-
-Schematic & Circuit
-![Circuit](Add your circuit diagram here) Add caption explaining connections
-
-![Schematic](Add your schematic diagram here) Add caption explaining the schematic
-
-Build Photos
-![Components](Add photo of your components here) List out all components shown
-
-![Build](Add photos of build process here) Explain the build steps
-
-![Final](Add photo of final product here) Explain the final build
 
 Project Demo
 Video
 [Add your demo video link here] Explain what the video demonstrates
 
-Additional Demos
-[Add any extra demo materials/links]
 
 Team Contributions
-[Name 1]: [Specific contributions]
-[Name 2]: [Specific contributions]
-[Name 3]: [Specific contributions]
+[Name 1]: Ananya Issac
